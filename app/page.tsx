@@ -2,11 +2,12 @@ import { faVault } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Metadata } from "next";
 import Link from "next/link";
+import { buttonStyles } from "./(ui)/styles.module";
 
 export const metadata: Metadata = { title: "Home - The Lockbox" }
 
 export default function Home() {
-  const buttonStyles = "hover:text-sky-500 text-center border-2 border-slate-500 p-1 rounded-lg";
+  
   return (
     <main className="flex flex-col min-h-screen p-8 md:p-20 items-center place-content-center align-middle">
       <div className="flex flex-col bg-slate-300 dark:bg-slate-800 rounded-xl p-4 items-center gap-2">

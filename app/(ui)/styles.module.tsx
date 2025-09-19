@@ -1,0 +1,1 @@
+export const buttonStyles = "hover:text-sky-500 text-center border-2 border-slate-500 p-1 rounded-lg";
