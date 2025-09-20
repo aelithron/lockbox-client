@@ -5,8 +5,11 @@ import { getAPIURL } from "@/utils/getAPIURL";
 import { buttonStyles } from "../(ui)/styles.module";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { openBoxAction } from "./openBoxAction";
+import { useRouter } from "next/navigation";
 
 export default function CreateBox() {
+  const router = useRouter();
   const [dropKey, setDropKey] = useState<string | null>(null);
   const [unlockKey, setUnlockKey] = useState<string | null>(null);
   const [isSecure, setIsSecure] = useState<boolean>(true);
@@ -35,6 +38,17 @@ export default function CreateBox() {
         setCreatedSuccess(true);
       })
   }
+  function handleOpenBox() {
+    openBoxAction(unlockKey!)
+    .then((result) => {
+      if (result.success) {
+        router.push("/open/box");
+        return;
+      } else {
+        alert(`Error opening box: ${result.message}`);
+      }
+    })
+  }
 
   useEffect(() => {
     setIsSecure(window.location.protocol === "https:" || window.location.hostname === "localhost");
@@ -42,18 +56,23 @@ export default function CreateBox() {
   if (!isSecure) return <HTTPBoxError />
   return (
     <div className="mt-4">
-      <button onClick={() => onConfirm()} className={buttonStyles}>Create Box</button>
-      {createdSuccess && <div className="static flex flex-col gap-1 p-2 mt-4 border-2 rounded-lg border-green-500">
-        <p className="text-center mb-3">Your box has been created!</p>
-        <div className="gap-2 flex">
-          <p>Drop key: {dropKey}</p>
-          <button onClick={() => navigator.clipboard.writeText(dropKey!)} className="hover:text-sky-500"><FontAwesomeIcon icon={faCopy} /></button>
+      {!createdSuccess && <button onClick={() => onConfirm()} className={buttonStyles}>Create Box</button>}
+      {createdSuccess && <div>
+        <div className="static flex flex-col gap-1 p-2 mt-4 border-2 rounded-lg border-green-500">
+          <p className="text-center mb-3">Your box has been created!</p>
+          <div className="gap-2 flex">
+            <p>Drop key: {dropKey}</p>
+            <button onClick={() => navigator.clipboard.writeText(dropKey!)} className="hover:text-sky-500"><FontAwesomeIcon icon={faCopy} /></button>
+          </div>
+          <div className="gap-2 flex">
+            <p>Unlock key: {unlockKey}</p>
+            <button onClick={() => navigator.clipboard.writeText(unlockKey!)} className="hover:text-sky-500"><FontAwesomeIcon icon={faCopy} /></button>
+          </div>
+          <p className="mt-3 text-center">Reminder to save these, and NEVER share your unlock key.</p>
         </div>
-        <div className="gap-2 flex">
-          <p>Unlock key: {unlockKey}</p>
-          <button onClick={() => navigator.clipboard.writeText(unlockKey!)} className="hover:text-sky-500"><FontAwesomeIcon icon={faCopy} /></button>
+        <div className="mt-4 text-center flex flex-col items-center">
+          <button onClick={() => handleOpenBox()} className={buttonStyles}>Open box</button>
         </div>
-        <p className="mt-3 text-center">Reminder to save these, and NEVER share your unlock key.</p>
       </div>}
     </div>
   );
