@@ -15,12 +15,7 @@ export default function CreateBox() {
   const [isSecure, setIsSecure] = useState<boolean>(true);
   const [createdSuccess, setCreatedSuccess] = useState<boolean>(false);
   function onConfirm() {
-    // bypass until api is done
-    setDropKey("0ECgnekF6mzZ74ns-DEMO");
-    setUnlockKey("lfdW8kiGk$TdmH^Eiw^2l0aOp6i#YzkU-DEMO");
-    setCreatedSuccess(true);
-    return;
-    fetch(`${getAPIURL()}/create`, {
+    fetch(`${getAPIURL()}/box`, {
       method: "POST"
     })
       .then((res) => {

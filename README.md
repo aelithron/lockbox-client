@@ -1,6 +1,6 @@
 **⚠️ This project is not completed yet, and will have bugs! DO NOT use this in production.**
 # lockbox-client
-Official client for `The Lockbox`, an encrypted and private platform for dropping messages. \
+Official client for `The Lockbox`, a secure and private platform for dropping messages. \
 Note that the server is at [lockbox-server](https://github.com/aelithron/lockbox-server).\
 I'm building this for Hack Club's Siege event!
 ## Inspiration

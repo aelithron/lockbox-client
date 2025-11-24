@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 export async function openBoxAction(boxKey: string): Promise<{ success: boolean, message: string }> {
   let openRes;
   try {
-    openRes = await fetch(`${getAPIURL()}/open`, {
+    openRes = await fetch(`${getAPIURL()}/verify`, {
       headers: { "Authorization": `Unlock-Key ${boxKey}` },
       method: "GET"
     });
